@@ -1,23 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, createContext } from 'react';
+import ButtonAppBar from './components/ButtonAppBar';
+import Dashboard from './components/Dashboard';
+import LogIn from './components/LogIn';
+
+export const LoginContext = createContext({
+  loggedIn: false,
+  setLoggedIn: () => {},
+});
 
 function App() {
+  const [loggedIn, setLoggedIn] = useState(true);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <ButtonAppBar />
+      <LoginContext.Provider value={{ loggedIn, setLoggedIn }}>
+        {loggedIn ? (
+          <LogIn />
+        ) : (
+          <Dashboard />
+        )}
+      </LoginContext.Provider>
     </div>
   );
 }
